@@ -3,6 +3,8 @@ version: "3.9"
 services:
     whisper:
         build: .
+        networks:
+            - isolated_net
         volumes:
             - ./models:/app/models # model cache mount
             - ./audios:/app/audios # optional: mount audio dir
@@ -11,3 +13,9 @@ services:
         working_dir: /app
         stdin_open: true
         tty: true
+
+networks:
+    isolated_net:
+        # disables internet access 
+        # 切斷網路就改成 true，需要網路就改成 false
+        internal: true 
