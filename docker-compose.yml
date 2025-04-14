@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+    whisper:
+        build: .
+        volumes:
+            - ./models:/app/models # model cache mount
+            - ./audios:/app/audios # optional: mount audio dir
+            - ./outputs:/app/outputs # optional: mount output dir
+            - ./main.py:/app/main.py
+        working_dir: /app
+        stdin_open: true
+        tty: true
