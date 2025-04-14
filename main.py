@@ -23,3 +23,7 @@ subprocess.run(
         LANGUAGE,
     ]
 )
+
+for i in os.listdir(OUTPUT_ROOT):
+    if i.endswith(".json") or i.endswith(".tsv"):
+        os.remove(os.path.join(OUTPUT_ROOT, i))
