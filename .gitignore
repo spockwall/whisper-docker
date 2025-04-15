@@ -1,5 +1,6 @@
 /models
 /outputs
 /audios
+/__pycache__/
 .qodo
 .cache*
