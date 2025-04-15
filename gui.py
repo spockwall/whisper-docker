@@ -1,6 +1,7 @@
 import os
 import shutil
 import subprocess
+import threading
 import tkinter as tk
 
 from tkinter import filedialog, messagebox, ttk
@@ -104,15 +105,22 @@ class WhisperGUI(tk.Tk):
             messagebox.showerror("Error", "Please select a model")
             return
 
-        messagebox.showinfo("Good", "Running docker container")
-        subprocess.run(
-            ["docker-compose", "run", "whisper", "python", "main.py"], check=False
-        )
-        messagebox.showinfo("Finished", "Docker container finished running")
+        # Run in background
+        threading.Thread(target=self._run_in_container, daemon=True).start()
 
     def stop(self):
         subprocess.run(["docker-compose", "down"], check=False)
         messagebox.showinfo("Stopped", "Docker container stopped")
+
+    def _run_in_container(self):
+        try:
+            messagebox.showinfo("Started", "Running docker container")
+            subprocess.run(
+                ["docker-compose", "run", "whisper", "python", "main.py"], check=False
+            )
+            messagebox.showinfo("Finished", "✅ Transcription complete.")
+        except subprocess.CalledProcessError as e:
+            messagebox.showinfo("Error", f"❌ Docker error: {e}")
 
 
 if __name__ == "__main__":
