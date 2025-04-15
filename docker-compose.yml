@@ -10,12 +10,14 @@ services:
             - ./audios:/app/audios # optional: mount audio dir
             - ./outputs:/app/outputs # optional: mount output dir
             - ./main.py:/app/main.py
+            - ./constants.py:/app/constants.py
+            - ./.cache.json:/app/.cache.json
         working_dir: /app
         stdin_open: true
         tty: true
 
 networks:
     isolated_net:
-        # disables internet access 
+        # disables internet access
         # 切斷網路就改成 true，需要網路就改成 false
-        internal: true 
+        internal: true
