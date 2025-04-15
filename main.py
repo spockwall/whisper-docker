@@ -1,29 +1,26 @@
 import whisper
 import os
 import subprocess
+from constants import MODEL_ROOT, AUDIO_ROOT, OUTPUT_ROOT, LANGUAGE, Model
 
-MODEL_ROOT = "/app/models"
-AUDIO_ROOT = "/app/audios"
-OUTPUT_ROOT = "/app/outputs"
-AUDIO_FILE = "test.mp3"
-MODLE_NAME = "small"  # tiny, base, small, medium, large
-LANGUAGE = "Chinese"  # Chinese, English
 
-subprocess.run(
-    [
-        "whisper",
-        AUDIO_ROOT + "/" + AUDIO_FILE,
-        "--model",
-        MODLE_NAME,
-        "--model_dir",
-        MODEL_ROOT,
-        "--output_dir",
-        OUTPUT_ROOT,
-        "--language",
-        LANGUAGE,
-    ]
-)
+def main(model_name: Model, file_name: str):
+    subprocess.run(
+        [
+            "whisper",
+            AUDIO_ROOT + "/" + file_name,
+            "--model",
+            model_name,
+            "--model_dir",
+            MODEL_ROOT,
+            "--output_dir",
+            OUTPUT_ROOT,
+            "--language",
+            LANGUAGE,
+        ]
+    )
 
-for i in os.listdir(OUTPUT_ROOT):
-    if i.endswith(".json") or i.endswith(".tsv"):
-        os.remove(os.path.join(OUTPUT_ROOT, i))
+    # Remove the redundant text files after processing
+    for i in os.listdir(OUTPUT_ROOT):
+        if i.endswith(".json") or i.endswith(".tsv"):
+            os.remove(os.path.join(OUTPUT_ROOT, i))
