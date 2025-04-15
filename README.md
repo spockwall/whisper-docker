@@ -11,7 +11,7 @@ Running openai-whisper in docker container
 4. change the audio file names in main.py
 5. Run the following commands
     ```shellscript=
-    $ cd whisper
+    $ cd whisper-docker
     $ docker-compose build 
     $ docker-compose run whisper python main.py
     ```
