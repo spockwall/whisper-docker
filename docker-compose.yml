@@ -20,4 +20,4 @@ networks:
     isolated_net:
         # disables internet access
         # 切斷網路就改成 true，需要網路就改成 false
-        internal: true
+        internal: false
